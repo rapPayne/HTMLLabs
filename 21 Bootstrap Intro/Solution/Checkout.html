@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>View cart/Checkout</title>
+  <link rel="stylesheet" href="../Content/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="site.css"/>
+</head>
+<body>
+<header>
+  <img src="Images/NorthwindSchooner.png" alt="Schooner logo"/>
+
+  <h1>Northwind Traders
+    <small>Fine foods for restaurants</small>
+  </h1>
+  <p>Welcome! <a href="Login.html">Log in</a></p>
+
+  <form action="search.html" method="get">
+    <label for="searchString">Search:</label>
+    <input type="search" name="searchString" id="searchString" title="Enter a product description"/>
+    <button class="btn">Search</button>
+  </form>
+  <ul>
+    <li><a href="Index.html">Northwind Traders</a></li>
+    <li><a href="Search.html">Search</a></li>
+    <li><a href="Checkout.html">Your cart/checkout</a></li>
+    <li><a href="aboutus.html">About us</a></li>
+    <li><a href="contactUs.html">Contact us</a></li>
+    <li><a href="Search.html?SearchString=''">Catalog</a></li>
+  </ul>
+</header>
+<main>
+  <h1> Check Out</h1>
+  <div id="errorMessage">That credit card was not valid.  Please try again.</div>
+  <table id='cartTable'>
+    <thead>
+    <tr>
+      <th>Product Id</th>
+      <th>Product Name</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Extended Price</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td></td>
+      <td style='text-align: right'>Subtotal:</td>
+      <td></td>
+      <td></td>
+      <td style='border-top: 5px'>$938.20</td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr>
+      <td>49</td>
+      <td>Maxilaku</td>
+      <td>$20.00</td>
+      <td><input type='text' data-id='49' value='5'/></td>
+      <td>$100.00</td>
+      <td><a href='/RemoveFromCart.html?ProductId=49'>remove</a></td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Teatime Chocolate Biscuits</td>
+      <td>$9.20</td>
+      <td><input type='text' data-id='19' value='8'/></td>
+      <td>$73.60</td>
+      <td><a href='/RemoveFromCart.html?ProductId=19'>remove</a></td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>Schoggi Schokolade</td>
+      <td>$43.90</td>
+      <td><input type='text' data-id='27' value='14'/></td>
+      <td>$614.60</td>
+      <td><a href='/RemoveFromCart.html?ProductId=27'>remove</a></td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td>Gorgonzola Telino</td>
+      <td>$12.50</td>
+      <td><input type='text' data-id='31' value='12'/></td>
+      <td>$150.00</td>
+      <td><a href='/RemoveFromCart.html?ProductId=31'>remove</a></td>
+    </tr>
+
+    </tbody>
+  </table>
+  <fieldset title="Where shall we ship this?">
+    <legend>Where shall we ship this?</legend>
+    <label for="shipName">Name to ship to:</label>
+    <input name="shipName" type="text" value="Cotton Williams" maxlength="40"
+           id="shipName"/>
+
+    <label for="shipAddress">Address:</label>
+    <input name="shipAddress" type="text" value="2636 Deep Valley Trail" maxlength="60"
+           id="shipAddress"/>
+
+    <label for="shipCity">City:</label>
+    <input name="shipCity" type="text" value="Carrollton" maxlength="15" id="shipCity"/>
+
+    <label for="shipRegion">Region/State:</label>
+    <input name="shipRegion" type="text" value="TX" maxlength="15" id="shipRegion"/>
+
+    <label for="shipPostalCode">Zip/Postal Code:</label>
+    <input name="shipPostalCode" type="text" value="75007" maxlength="10"
+           id="shipPostalCode"/>
+
+    <label for="shipCountry">Country:</label>
+    <input name="shipCountry" type="text" value="US" maxlength="15" id="shipCountry"/>
+  </fieldset>
+  <fieldset>
+    <legend>How shall we ship it?</legend>
+    <label for="shipVia">Shipping method:</label>
+    <select name="shipVia" id="shipVia">
+      <option value="1">UPS Next Day Air - $262.70</option>
+      <option value="2">UPS 2nd Day Air - $140.73</option>
+      <option value="3">UPS Ground - $46.91</option>
+      <option value="4">FedEx Standard Overnight - $234.55</option>
+      <option value="5">FedEx 2Day - $121.97</option>
+      <option value="6">FedEx Ground - $49.72</option>
+      <option value="7">US Postal Service Priority Mail - $37.53</option>
+    </select>
+  </fieldset>
+  <fieldset>
+    <legend>How would you like to pay for it?</legend>
+    <label for="creditCardNumber">Credit card number:</label>
+    <input name="creditCardNumber" type="text" maxlength="20" id="creditCardNumber"
+           autocomplete="off"/>
+
+    <label for="expiryMonth">Expiration:</label>
+    <select name="expiryMonth" id="expiryMonth">
+      <option value="--">--</option>
+      <option value="01">January</option>
+      <option value="02">February</option>
+      <option value="03">March</option>
+      <option value="04">April</option>
+      <option value="05">May</option>
+      <option value="06">June</option>
+      <option value="07">July</option>
+      <option value="08">August</option>
+      <option value="09">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+
+    </select>
+    <select name="expiryYear" id="ddlExpiryYear">
+      <option value="--">--</option>
+      <option value="2014">2014</option>
+      <option value="2015">2015</option>
+      <option value="2016">2016</option>
+      <option value="2017">2017</option>
+      <option value="2018">2018</option>
+      <option value="2019">2019</option>
+    </select>
+    <label><input id="storeCCNumber" type="checkbox" name="storeCCNumber"/> Remember this credit card number for next time I check
+      out.</label>
+  </fieldset>
+
+  <input type="submit" name="placeOrder" value="Place Order" id="placeOrder"/>
+
+  </div>
+
+</main>
+<footer>
+  <span>Copyright &copy; Northwind Traders</span>
+  <ul>
+    <li>
+      <a href="https://www.facebook.com/pages/Northwind-Traders/101856779971208">Facebook</a>
+    </li>
+    <li>
+      <a href="https://twitter.com/NWTNews">Twitter</a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/company/northwind-ventures-dba-northwind-technologies-?trk=company_logo">LinkedIn</a>
+    </li>
+  </ul>
+</footer>
+</body>
+</html>
