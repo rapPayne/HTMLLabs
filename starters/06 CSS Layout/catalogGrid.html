@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <meta charset="utf-8">
+  <title>Product Details</title>
+</head>
+
+<body class="container ng-scope" ng-app="productModule">
+  <!-- ngInclude: '/app/shared/pageHeaderPartial.html' -->
+  <div ng-include="'/app/shared/pageHeaderPartial.html'" ng-controller="pageHeaderController" class="ng-scope">
+    <nav class="navbar navbar-default navbar-fixed-top ng-scope">
+      <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topNavbar">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+      </button>
+      <div id="topNavbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/app/index.html">Northwind Traders</a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Things to do
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/app/product/index.html#/search">
+                  <span class="glyphicon glyphicon-search"></span> Search</a>
+              </li>
+              <li>
+                <a href="aboutUs.html" data-toggle="tooltip" data-placement="right" title="Coming soon!">
+                  <span class="glyphicon glyphicon-info-sign"></span> About us</a>
+              </li>
+              <li>
+                <a href="contactUs.html" data-toggle="tooltip" data-placement="right" title="Coming soon!">
+                  <span class="glyphicon glyphicon-envelope"></span> Contact us</a>
+              </li>
+              <li>
+                <a href="/app/product/index.html#/browse">
+                  <span class="glyphicon glyphicon-list-alt"></span> Catalog</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="/checkout">
+              <span class="glyphicon glyphicon-shopping-cart"></span> Your cart
+              <span class="badge ng-binding">0</span>
+            </a>
+          </li>
+        </ul>
+        <span ng-show="user.username" class="ng-hide">
+          <p class="navbar-text ng-binding">Hi,
+            <small>
+              <a href="/logout">Log out</a>
+            </small>
+          </p>
+        </span>
+        <span ng-hide="user.username">
+          <p class="navbar-text">Welcome!
+            <small>
+              <a href="/login">Log in</a>
+            </small>
+          </p>
+        </span>
+
+        <form action="/search" method="GET" class="navbar-form navbar-left ng-pristine ng-valid">
+          <input type="search" name="searchString" id="searchString" title="Enter a product description" placeholder="Search" class="form-control">
+          <button class="btn">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </form>
+      </div>
+    </nav>
+    <header class="jumbotron img-rounded row ng-scope">
+      <img class="img-responsive col-sm-3" src="/assets/img/ChefHatLogo.png" alt="Northwind logo">
+
+      <h1 class="col-sm-9">Northwind Traders
+        <small>Fine foods for restaurants</small>
+      </h1>
+    </header>
+  </div>
+  <main class="row">
+    <!-- ngView: -->
+    <div ng-view="" class="ng-scope">
+      <h1 class="ng-scope">Browse the Product Catalog</h1> Category:
+      <select ng-model="category" ng-options="category.categoryName for category in categories" name="category" id="category" class="ng-pristine ng-valid ng-scope ng-empty ng-touched">
+        <option value="" class="" selected="selected">All categories</option>
+        <option label="Beverages" value="object:6">Beverages</option>
+        <option label="Condiments" value="object:7">Condiments</option>
+        <option label="Confections" value="object:8">Confections</option>
+        <option label="Dairy Products" value="object:9">Dairy Products</option>
+        <option label="Grains/Cereals" value="object:10">Grains/Cereals</option>
+        <option label="Meat/Poultry" value="object:11">Meat/Poultry</option>
+        <option label="Produce" value="object:12">Produce</option>
+        <option label="Seafood" value="object:13">Seafood</option>
+      </select>
+
+      <div class="table ng-scope">
+        <section class="row">
+          <!-- ngRepeat: cat in categories -->
+          <section ng-repeat="cat in categories" ng-show="cat == category || ! category" class="ng-scope">
+            <h1 class="ng-binding">Beverages</h1>
+            <p class="ng-binding">Soft drinks, coffees, teas, beers, and ales</p>
+            <!-- ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/1">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/1.jpg" src="/assets/img/ProductImages/1.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/1" class="ng-binding">Chai
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">10 boxes x 20 bags</div>
+                <div class="col-sm-1 ng-binding">US$18.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/2">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/2.jpg" src="/assets/img/ProductImages/2.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/2" class="ng-binding">Chang
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 12 oz bottles</div>
+                <div class="col-sm-1 ng-binding">US$19.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/39">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/39.jpg" src="/assets/img/ProductImages/39.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/39" class="ng-binding">Chartreuse verte
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">750 cc per bottle</div>
+                <div class="col-sm-1 ng-binding">US$18.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/38">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/38.jpg" src="/assets/img/ProductImages/38.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/38" class="ng-binding">Côte de Blaye
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 75 cl bottles</div>
+                <div class="col-sm-1 ng-binding">US$263.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/24">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/24.jpg" src="/assets/img/ProductImages/24.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/24" class="ng-binding">Guaraná Fantástica
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 355 ml cans</div>
+                <div class="col-sm-1 ng-binding">US$4.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/43">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/43.jpg" src="/assets/img/ProductImages/43.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/43" class="ng-binding">Ipoh Coffee
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">16 - 500 g tins</div>
+                <div class="col-sm-1 ng-binding">US$46.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/76">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/76.jpg" src="/assets/img/ProductImages/76.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/76" class="ng-binding">Lakkalikööri
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">500 ml</div>
+                <div class="col-sm-1 ng-binding">US$18.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/67">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/67.jpg" src="/assets/img/ProductImages/67.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/67" class="ng-binding">Laughing Lumberjack Lager
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 12 oz bottles</div>
+                <div class="col-sm-1 ng-binding">US$14.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/70">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/70.jpg" src="/assets/img/ProductImages/70.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/70" class="ng-binding">Outback Lager
+                    <span ng-show="product.featured" class="label label-success">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 355 ml bottles</div>
+                <div class="col-sm-1 ng-binding">US$15.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/75">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/75.jpg" src="/assets/img/ProductImages/75.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/75" class="ng-binding">Rhönbräu Klosterbier
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 0.5 l bottles</div>
+                <div class="col-sm-1 ng-binding">US$7.75</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/34">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/34.jpg" src="/assets/img/ProductImages/34.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/34" class="ng-binding">Sasquatch Ale
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 12 oz bottles</div>
+                <div class="col-sm-1 ng-binding">US$14.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/35">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/35.jpg" src="/assets/img/ProductImages/35.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/35" class="ng-binding">Steeleye Stout
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 12 oz bottles</div>
+                <div class="col-sm-1 ng-binding">US$18.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+          </section>
+          <!-- end ngRepeat: cat in categories -->
+          <section ng-repeat="cat in categories" ng-show="cat == category || ! category" class="ng-scope">
+            <h1 class="ng-binding">Condiments</h1>
+            <p class="ng-binding">Sweet and savory sauces, relishes, spreads, and seasonings</p>
+            <!-- ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/3">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/3.jpg" src="/assets/img/ProductImages/3.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/3" class="ng-binding">Aniseed Syrup
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 550 ml bottles</div>
+                <div class="col-sm-1 ng-binding">US$10.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/4">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/4.jpg" src="/assets/img/ProductImages/4.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/4" class="ng-binding">Chef Anton's Cajun Seasoning
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">48 - 6 oz jars</div>
+                <div class="col-sm-1 ng-binding">US$22.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/5">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/5.jpg" src="/assets/img/ProductImages/5.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/5" class="ng-binding">Chef Anton's Gumbo Mix
+                    <span ng-show="product.featured" class="label label-success">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">36 boxes</div>
+                <div class="col-sm-1 ng-binding">US$21.35</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/15">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/15.jpg" src="/assets/img/ProductImages/15.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/15" class="ng-binding">Genen Shouyu
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 250 ml bottles</div>
+                <div class="col-sm-1 ng-binding">US$15.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/6">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/6.jpg" src="/assets/img/ProductImages/6.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/6" class="ng-binding">Grandma's Boysenberry Spread
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 8 oz jars</div>
+                <div class="col-sm-1 ng-binding">US$25.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/44">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/44.jpg" src="/assets/img/ProductImages/44.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/44" class="ng-binding">Gula Malacca
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">20 - 2 kg bags</div>
+                <div class="col-sm-1 ng-binding">US$19.45</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/65">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/65.jpg" src="/assets/img/ProductImages/65.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/65" class="ng-binding">Louisiana Fiery Hot Pepper Sauce
+                    <span ng-show="product.featured" class="label label-success">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">32 - 8 oz bottles</div>
+                <div class="col-sm-1 ng-binding">US$21.05</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/66">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/66.jpg" src="/assets/img/ProductImages/66.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/66" class="ng-binding">Louisiana Hot Spiced Okra
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 8 oz jars</div>
+                <div class="col-sm-1 ng-binding">US$17.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/8">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/8.jpg" src="/assets/img/ProductImages/8.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/8" class="ng-binding">Northwoods Cranberry Sauce
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 12 oz jars</div>
+                <div class="col-sm-1 ng-binding">US$40.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/77">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/77.jpg" src="/assets/img/ProductImages/77.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/77" class="ng-binding">Original Frankfurter grüne Soße
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 boxes</div>
+                <div class="col-sm-1 ng-binding">US$13.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/61">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/61.jpg" src="/assets/img/ProductImages/61.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/61" class="ng-binding">Sirop d'érable
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 500 ml bottles</div>
+                <div class="col-sm-1 ng-binding">US$28.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/63">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/63.jpg" src="/assets/img/ProductImages/63.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/63" class="ng-binding">Vegie-spread
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">15 - 625 g jars</div>
+                <div class="col-sm-1 ng-binding">US$43.90</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+          </section>
+          <!-- end ngRepeat: cat in categories -->
+          <section ng-repeat="cat in categories" ng-show="cat == category || ! category" class="ng-scope">
+            <h1 class="ng-binding">Confections</h1>
+            <p class="ng-binding">Desserts, candies, and sweet breads</p>
+            <!-- ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/48">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/48.jpg" src="/assets/img/ProductImages/48.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/48" class="ng-binding">Chocolade
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">10 pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$12.75</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/26">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/26.jpg" src="/assets/img/ProductImages/26.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/26" class="ng-binding">Gumbär Gummibärchen
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">100 - 250 g bags</div>
+                <div class="col-sm-1 ng-binding">US$31.23</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/49">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/49.jpg" src="/assets/img/ProductImages/49.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/49" class="ng-binding">Maxilaku
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 50 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$20.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/25">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/25.jpg" src="/assets/img/ProductImages/25.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/25" class="ng-binding">NuNuCa Nuß-Nougat-Creme
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">20 - 450 g glasses</div>
+                <div class="col-sm-1 ng-binding">US$14.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/16">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/16.jpg" src="/assets/img/ProductImages/16.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/16" class="ng-binding">Pavlova
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">32 - 500 g boxes</div>
+                <div class="col-sm-1 ng-binding">US$17.45</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/27">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/27.jpg" src="/assets/img/ProductImages/27.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/27" class="ng-binding">Schoggi Schokolade
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">100 - 100 g pieces</div>
+                <div class="col-sm-1 ng-binding">US$43.90</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/68">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/68.jpg" src="/assets/img/ProductImages/68.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/68" class="ng-binding">Scottish Longbreads
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">10 boxes x 8 pieces</div>
+                <div class="col-sm-1 ng-binding">US$12.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/20">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/20.jpg" src="/assets/img/ProductImages/20.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/20" class="ng-binding">Sir Rodney's Marmalade
+                    <span ng-show="product.featured" class="label label-success">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">30 gift boxes</div>
+                <div class="col-sm-1 ng-binding">US$81.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/21">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/21.jpg" src="/assets/img/ProductImages/21.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/21" class="ng-binding">Sir Rodney's Scones
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 pkgs. x 4 pieces</div>
+                <div class="col-sm-1 ng-binding">US$10.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/62">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/62.jpg" src="/assets/img/ProductImages/62.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/62" class="ng-binding">Tarte au sucre
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">48 pies</div>
+                <div class="col-sm-1 ng-binding">US$49.30</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/19">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/19.jpg" src="/assets/img/ProductImages/19.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/19" class="ng-binding">Teatime Chocolate Biscuits
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">10 boxes x 12 pieces</div>
+                <div class="col-sm-1 ng-binding">US$9.20</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/50">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/50.jpg" src="/assets/img/ProductImages/50.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/50" class="ng-binding">Valkoinen suklaa
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 100 g bars</div>
+                <div class="col-sm-1 ng-binding">US$16.25</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/47">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/47.jpg" src="/assets/img/ProductImages/47.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/47" class="ng-binding">Zaanse koeken
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">10 - 4 oz boxes</div>
+                <div class="col-sm-1 ng-binding">US$9.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+          </section>
+          <!-- end ngRepeat: cat in categories -->
+          <section ng-repeat="cat in categories" ng-show="cat == category || ! category" class="ng-scope">
+            <h1 class="ng-binding">Dairy Products</h1>
+            <p class="ng-binding">Cheeses</p>
+            <!-- ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/60">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/60.jpg" src="/assets/img/ProductImages/60.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/60" class="ng-binding">Camembert Pierrot
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">15 - 300 g rounds</div>
+                <div class="col-sm-1 ng-binding">US$34.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/71">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/71.jpg" src="/assets/img/ProductImages/71.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/71" class="ng-binding">Flotemysost
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">10 - 500 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$21.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/33">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/33.jpg" src="/assets/img/ProductImages/33.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/33" class="ng-binding">Geitost
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">500 g</div>
+                <div class="col-sm-1 ng-binding">US$2.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/31">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/31.jpg" src="/assets/img/ProductImages/31.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/31" class="ng-binding">Gorgonzola Telino
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 100 g pkgs</div>
+                <div class="col-sm-1 ng-binding">US$12.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/69">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/69.jpg" src="/assets/img/ProductImages/69.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/69" class="ng-binding">Gudbrandsdalsost
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">10 kg pkg.</div>
+                <div class="col-sm-1 ng-binding">US$36.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/32">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/32.jpg" src="/assets/img/ProductImages/32.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/32" class="ng-binding">Mascarpone Fabioli
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 200 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$32.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/72">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/72.jpg" src="/assets/img/ProductImages/72.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/72" class="ng-binding">Mozzarella di Giovanni
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 200 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$34.80</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/11">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/11.jpg" src="/assets/img/ProductImages/11.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/11" class="ng-binding">Queso Cabrales
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">1 kg pkg.</div>
+                <div class="col-sm-1 ng-binding">US$21.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/12">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/12.jpg" src="/assets/img/ProductImages/12.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/12" class="ng-binding">Queso Manchego La Pastora
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">10 - 500 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$38.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/59">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/59.jpg" src="/assets/img/ProductImages/59.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/59" class="ng-binding">Raclette Courdavault
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">5 kg pkg.</div>
+                <div class="col-sm-1 ng-binding">US$55.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+          </section>
+          <!-- end ngRepeat: cat in categories -->
+          <section ng-repeat="cat in categories" ng-show="cat == category || ! category" class="ng-scope">
+            <h1 class="ng-binding">Grains/Cereals</h1>
+            <p class="ng-binding">Breads, crackers, pasta, and cereal</p>
+            <!-- ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/52">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/52.jpg" src="/assets/img/ProductImages/52.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/52" class="ng-binding">Filo Mix
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">16 - 2 kg boxes</div>
+                <div class="col-sm-1 ng-binding">US$7.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/56">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/56.jpg" src="/assets/img/ProductImages/56.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/56" class="ng-binding">Gnocchi di nonna Alice
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 250 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$38.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/22">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/22.jpg" src="/assets/img/ProductImages/22.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/22" class="ng-binding">Gustaf's Knäckebröd
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 500 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$21.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/57">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/57.jpg" src="/assets/img/ProductImages/57.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/57" class="ng-binding">Ravioli Angelo
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 250 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$19.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/42">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/42.jpg" src="/assets/img/ProductImages/42.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/42" class="ng-binding">Singaporean Hokkien Fried Mee
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">32 - 1 kg pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$14.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/23">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/23.jpg" src="/assets/img/ProductImages/23.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/23" class="ng-binding">Tunnbröd
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 250 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$9.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/64">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/64.jpg" src="/assets/img/ProductImages/64.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/64" class="ng-binding">Wimmers gute Semmelknödel
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">20 bags x 4 pieces</div>
+                <div class="col-sm-1 ng-binding">US$33.25</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+          </section>
+          <!-- end ngRepeat: cat in categories -->
+          <section ng-repeat="cat in categories" ng-show="cat == category || ! category" class="ng-scope">
+            <h1 class="ng-binding">Meat/Poultry</h1>
+            <p class="ng-binding">Prepared meats</p>
+            <!-- ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/17">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/17.jpg" src="/assets/img/ProductImages/17.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/17" class="ng-binding">Alice Mutton
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">20 - 1 kg tins</div>
+                <div class="col-sm-1 ng-binding">US$39.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/9">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/9.jpg" src="/assets/img/ProductImages/9.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/9" class="ng-binding">Mishi Kobe Niku
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">18 - 500 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$97.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/53">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/53.jpg" src="/assets/img/ProductImages/53.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/53" class="ng-binding">Perth Pasties
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">48 pieces</div>
+                <div class="col-sm-1 ng-binding">US$32.80</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/55">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/55.jpg" src="/assets/img/ProductImages/55.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/55" class="ng-binding">Pâté chinois
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 boxes x 2 pies</div>
+                <div class="col-sm-1 ng-binding">US$24.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/29">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/29.jpg" src="/assets/img/ProductImages/29.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/29" class="ng-binding">Thüringer Rostbratwurst
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">50 bags x 30 sausages.</div>
+                <div class="col-sm-1 ng-binding">US$123.79</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/54">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/54.jpg" src="/assets/img/ProductImages/54.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/54" class="ng-binding">Tourtière
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">16 pies</div>
+                <div class="col-sm-1 ng-binding">US$7.45</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+          </section>
+          <!-- end ngRepeat: cat in categories -->
+          <section ng-repeat="cat in categories" ng-show="cat == category || ! category" class="ng-scope">
+            <h1 class="ng-binding">Produce</h1>
+            <p class="ng-binding">Dried fruit and bean curd</p>
+            <!-- ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/74">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/74.jpg" src="/assets/img/ProductImages/74.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/74" class="ng-binding">Longlife Tofu
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">5 kg pkg.</div>
+                <div class="col-sm-1 ng-binding">US$10.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/51">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/51.jpg" src="/assets/img/ProductImages/51.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/51" class="ng-binding">Manjimup Dried Apples
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">50 - 300 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$53.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/28">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/28.jpg" src="/assets/img/ProductImages/28.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/28" class="ng-binding">Rössle Sauerkraut
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">25 - 825 g cans</div>
+                <div class="col-sm-1 ng-binding">US$45.60</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/14">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/14.jpg" src="/assets/img/ProductImages/14.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/14" class="ng-binding">Tofu
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">40 - 100 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$23.25</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/7">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/7.jpg" src="/assets/img/ProductImages/7.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/7" class="ng-binding">Uncle Bob's Organic Dried Pears
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 1 lb pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$30.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+          </section>
+          <!-- end ngRepeat: cat in categories -->
+          <section ng-repeat="cat in categories" ng-show="cat == category || ! category" class="ng-scope">
+            <h1 class="ng-binding">Seafood</h1>
+            <p class="ng-binding">Seaweed and fish</p>
+            <!-- ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/40">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/40.jpg" src="/assets/img/ProductImages/40.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/40" class="ng-binding">Boston Crab Meat
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 4 oz tins</div>
+                <div class="col-sm-1 ng-binding">US$18.40</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/18">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/18.jpg" src="/assets/img/ProductImages/18.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/18" class="ng-binding">Carnarvon Tigers
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">16 kg pkg.</div>
+                <div class="col-sm-1 ng-binding">US$62.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/58">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/58.jpg" src="/assets/img/ProductImages/58.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/58" class="ng-binding">Escargots de Bourgogne
+                    <span ng-show="product.featured" class="label label-success">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 pieces</div>
+                <div class="col-sm-1 ng-binding">US$13.25</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/37">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/37.jpg" src="/assets/img/ProductImages/37.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/37" class="ng-binding">Gravad lax
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 500 g pkgs.</div>
+                <div class="col-sm-1 ng-binding">US$26.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/10">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/10.jpg" src="/assets/img/ProductImages/10.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/10" class="ng-binding">Ikura
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 200 ml jars</div>
+                <div class="col-sm-1 ng-binding">US$31.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/36">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/36.jpg" src="/assets/img/ProductImages/36.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/36" class="ng-binding">Inlagd Sill
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 250 g jars</div>
+                <div class="col-sm-1 ng-binding">US$19.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/41">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/41.jpg" src="/assets/img/ProductImages/41.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/41" class="ng-binding">Jack's New England Clam Chowder
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">12 - 12 oz cans</div>
+                <div class="col-sm-1 ng-binding">US$9.65</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/13">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/13.jpg" src="/assets/img/ProductImages/13.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/13" class="ng-binding">Konbu
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">2 kg box</div>
+                <div class="col-sm-1 ng-binding">US$6.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/30">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/30.jpg" src="/assets/img/ProductImages/30.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/30" class="ng-binding">Nord-Ost Matjeshering
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">10 - 200 g glasses</div>
+                <div class="col-sm-1 ng-binding">US$25.89</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/45">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/45.jpg" src="/assets/img/ProductImages/45.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/45" class="ng-binding">Rogede sild
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">1k pkg.</div>
+                <div class="col-sm-1 ng-binding">US$9.50</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/73">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/73.jpg" src="/assets/img/ProductImages/73.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/73" class="ng-binding">Röd Kaviar
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">24 - 150 g jars</div>
+                <div class="col-sm-1 ng-binding">US$15.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+            <div ng-repeat="product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName'" class="row ng-scope">
+              <nw-product-overview>
+                <div class="col-sm-2">
+                  <a href="#/46">
+                    <img class="img-responsive" ng-src="/assets/img/ProductImages/46.jpg" src="/assets/img/ProductImages/46.jpg">
+                  </a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="#/46" class="ng-binding">Spegesild
+                    <span ng-show="product.featured" class="label label-success ng-hide">Featured</span>
+                  </a>
+                </div>
+                <div class="col-sm-3 ng-binding">4 - 450 g glasses</div>
+                <div class="col-sm-1 ng-binding">US$12.00</div>
+                <div class="col-sm-2">
+                  <input ng-model="quantity" type="number" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+                  <button ng-click="addToCart(product, quantity)" class="btn btn-primary btn-sm glyphicon glyphicon-shopping-cart"></button>
+                </div>
+              </nw-product-overview>
+            </div>
+            <!-- end ngRepeat: product in products | filter: {categoryID: cat.categoryID}:true | orderBy:'productName' -->
+          </section>
+          <!-- end ngRepeat: cat in categories -->
+        </section>
+      </div>
+    </div>
+  </main>
+  <!-- ngInclude: '/app/shared/pageFooterPartial.html' -->
+  <footer class="row ng-scope" ng-include="'/app/shared/pageFooterPartial.html'">
+    <span class="ng-scope">Copyright © Northwind Traders</span>
+    <ul class="list-unstyled list-inline text-center ng-scope">
+      <li>
+        <a href="https://www.facebook.com/pages/Northwind-Traders/101856779971208">Facebook</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/NWTNews">Twitter</a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/company/northwind-ventures-dba-northwind-technologies-?trk=company_logo">LinkedIn</a>
+      </li>
+    </ul>
+  </footer>
+
+</body>
+
+</html>
