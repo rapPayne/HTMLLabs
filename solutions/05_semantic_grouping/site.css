@@ -1,0 +1,42 @@
+:root {
+  --dark_color: #0C5D9C;
+  --light_color: white;
+  --dark_color_2: #9C0C5D;
+  --dark_color_3: #5D9C0C;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  background-color: var(--light_color);
+  color: var(--dark_color);
+}
+
+#logo {
+  height: 50px;
+}
+
+#cart {
+  height: 40px;
+}
+
+#day_chooser {
+  color: var(--light_color);
+  background-color: var(--dark_color);
+}
+
+#day_chooser_ul {
+  list-style-type: none;
+}
+
+.brief_poster {
+  height: 200px;
+}
+
+#social_icons {
+  list-style-type: none;
+}
+
+.social_icon {
+  height: 30px;
+}
