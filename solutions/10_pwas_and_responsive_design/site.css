@@ -85,6 +85,7 @@ main {
 #film_briefs {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .film_brief {
