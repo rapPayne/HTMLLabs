@@ -166,11 +166,17 @@ main {
 
 #text {
   padding: 50px 10px 0 10px;
+  flex-basis: 300px;
+  flex-shrink: 1;
+  flex-grow: 2;
 }
 
 #poster {
   padding: 5px;
   text-align: center;
+  flex-basis: 300px;
+  flex-shrink: 2;
+  flex-grow: 1;
 }
 
 #film_title {
