@@ -1,0 +1,150 @@
+:root {
+  --dark_color: #0C5D9C;
+  --light_color: white;
+  --dark_color_2: #9C0C5D;
+  --dark_color_3: #5D9C0C;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  background-color: var(--light_color);
+  color: var(--dark_color);
+}
+
+#page_header {
+  position: fixed;
+  top: 0; left: 0;
+  display: flex;
+  align-items: center;
+  background-color: var(--light_color);
+  width: 100%;
+  padding: 10px 10px 10px 0;
+  border-bottom: 1px solid var(--dark_color_2);
+  box-sizing: border-box;
+}
+#spacer {
+  flex-grow: 1;
+}
+
+#logo {
+  height: 50px;
+}
+
+#company_name {
+  margin-left: 1em;
+}
+
+#cart {
+  height: 40px;
+}
+
+#login {
+  margin-left: 1em;
+}
+
+main {
+  padding-top: 51px;
+}
+
+#social_icons {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  text-align: center;
+}
+
+.social_icon {
+  height: 30px;
+}
+
+/* Landing only */
+#day_chooser {
+  color: var(--light_color);
+  background-color: var(--dark_color);
+  text-align: center;
+  padding: 10px;
+}
+
+#day_chooser_ul {
+  list-style-type: none;
+}
+
+.day {
+  float: left;
+  padding-left: 50px;
+}
+
+.last {
+  clear: both;
+}
+
+#film_briefs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.film_brief {
+  border: 2px solid var(--dark_color_3);
+  margin: 20px;
+  padding: 10px;
+  width: 400px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'poster info'
+  'times times';
+}
+
+.poster {
+  grid-area: poster;
+}
+
+.brief_poster {
+  height: 200px;
+  padding-right: 10px;
+}
+
+.info {
+  grid-area: info;
+}
+
+.showing_times {
+  grid-area: times;
+}
+
+.showing_times_ul {
+  list-style-type: none;
+}
+
+.time {
+  float: left;
+  padding-right: 15px;
+}
+
+/* Details only */
+#film_title {
+  text-align: center;
+}
+
+#summary {
+  display: flex;
+}
+
+#text {
+  padding: 50px;
+  flex-basis: 300px;
+  flex-shrink: 1;
+  flex-grow: 2;
+}
+
+#poster {
+  padding: 5px;
+  flex-basis: 300px;
+  flex-shrink: 2;
+  flex-grow: 1;
+}
+
+#poster_img {
+  max-height: 500px;
+}

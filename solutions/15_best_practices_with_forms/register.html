@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Film details - Dinner and a movie</title>
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="site.css">
+</head>
+
+<body>
+  <header id="page_header">
+    <img src="assets/DAAMLogo.png" alt="company logo" />
+    <p>Dinner and a Movie</p>
+    <div class="spacer"></div>
+    <a href="checkout.html"><img class="icon" src="assets/cart.png" alt="Check out" /></a>
+    <a id="login" href="login.html">Log in</a>
+  </header>
+  <main>
+    <h1>Register</h1>
+    <p class="announcement">Sign up for free so you can reserve seats and food, skipping the lines and go right to your
+      table to enjoy the show!</p>
+    <form>
+      <div class="inline_form">
+        <div class="form_group">
+          <label for="first">First name</label>
+          <input id="first" name="first" placeholder="First" type="text" />
+        </div>
+        <div class="form_group">
+          <label for="last">Last name</label>
+          <input id="last" name="last" placeholder="Last" type="text" />
+        </div>
+      </div>
+      <div class="inline_form">
+        <div class="form_group">
+          <label for="password">Password</label>
+          <input id="password" name="password" placeholder="Password" type="password" />
+        </div>
+        <div class="form_group">
+          <label for="password_2">Password (again)</label>
+          <input id="password_2" name="password_2" placeholder="Password (again)" type="password" />
+        </div>
+      </div>
+      <div class="form_group">
+        <label for="card_pan">Credit Card</label>
+        <input id="card_pan" name="card_pan" placeholder="Credit card number" pattern="([0-9]{4}[- ]?){4}" autocomplete="off" />
+      </div>
+      <div class="inline_form">
+        <div class="form_group">
+          <label for="card_month">Expiry month</label>
+          <select id="card_month" name="card_month">
+            <option>Choose one ...</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+            <select>
+        </div>
+        <div class="form_group">
+          <label for="card_year">Expiry year</label>
+          <select id="card_year" name="card_year">
+            <option>Choose one ...</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <select>
+        </div>
+      </div>
+      <div class="inline_form">
+        <div class="form_group">
+          <label for="cell">Cell</label>
+          <input id="cell" name="cell" placeholder="Cell phone number" type="text" />
+        </div>
+        <div class="form_group">
+          <label for="email">Email</label>
+          <input id="email" name="email" placeholder="Email" type="email" />
+          <label class="has_checkbox" for="opt_in"><input id="opt_in" name="opt_in" type="checkbox" />Receive emails
+            from
+            us?</label>
+        </div>
+      </div>
+      <div class="button_div">
+        <button class="primary_btn">Register</button>
+      </div>
+    </form>
+  </main>
+  <footer>
+    <ul id="social_icons">
+      <li><a href="landing.html"><img src="assets/web.png" alt="web" /></a></li>
+      <li><a href="http://facebook.com/daam"><img src="assets/facebook.png" alt="facebook" /></a></li>
+      <li><a href="http://instagram.com/daam"><img src="assets/instagram.png" alt="instagram" /></a></li>
+      <li><a href="http://twitter.com/daam"><img src="assets/twitter.png" alt="twitter" /></a></li>
+    </ul>
+    <div id="copyright_notice">
+      <p>Copyright &copy; Dinner And A Movie, Inc. 2020</p>
+    </div>
+  </footer>
+</body>
+
+</html>

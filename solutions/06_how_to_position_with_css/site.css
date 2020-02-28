@@ -1,0 +1,71 @@
+:root {
+  --dark_color: #0C5D9C;
+  --light_color: white;
+  --dark_color_2: #9C0C5D;
+  --dark_color_3: #5D9C0C;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  background-color: var(--light_color);
+  color: var(--dark_color);
+}
+
+header#page_header {
+  position: fixed;
+  top: 0; left: 0;
+  background-color: var(--light_color);
+  width: 100vw;
+  padding: 5px 20px 10px 20px;
+  border-bottom: 1px solid var(--dark_color_2);
+}
+
+#logo {
+  height: 50px;
+}
+
+#cart {
+  height: 40px;
+}
+
+main {
+  padding-top: 150px;
+}
+
+#social_icons {
+  list-style-type: none;
+  text-align: center;
+}
+
+.social_icon {
+  height: 30px;
+}
+
+/* Landing only */
+#day_chooser {
+  color: var(--light_color);
+  background-color: var(--dark_color);
+  text-align: center;
+  padding: 10px;
+}
+
+#day_chooser_ul {
+  list-style-type: none;
+}
+
+.film_brief {
+  border: 2px solid var(--dark_color_3);
+  margin: 20px;
+  padding: 10px;
+  width: 400px;
+}
+
+.brief_poster {
+  height: 200px;
+}
+
+/* Details only */
+#film_title {
+  text-align: center;
+}
