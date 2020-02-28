@@ -39,6 +39,11 @@ body {
 
 #page_header .icon {
   height: 40px;
+  transition: transform 500ms;
+}
+
+#page_header .icon:active {
+  transform: rotateY(180deg);
 }
 
 #page_header a[href*='login'] {
@@ -58,6 +63,11 @@ main {
 
 #social_icons img {
   height: 30px;
+  transition: transform 500ms;
+}
+
+#social_icons img:hover {
+  transform: rotate(10deg) scale(1.3);
 }
 
 /* Landing only */
@@ -146,6 +156,11 @@ main {
   padding-right: 25px;
   font-weight: bold;
   font-size: 1.1em;
+  transition: transform 250ms;
+}
+
+.showing_times > ul > li:active {
+  transform: scale(1.5);
 }
 
 /* Details only */
