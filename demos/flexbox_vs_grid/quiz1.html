@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="module">
+    <script type="module" defer>
       import { sayHello } from './flexbox_vs_grid.js';
-      sayHello();
+      const boxes = makeBoxes();
+      console.log(boxes);
+      
+      boxes.forEach(box => {
+        document.querySelector('#boxes').appendChild(box);
+      });
     </script>
+    <link rel="stylesheet" href="quiz1.css" />
   </head>
   <body>
+    <p>boxes</p>
     <section id="boxes">
     </section>
+    <p>boxes</p>
   </body>
 </html>
