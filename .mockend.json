@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "owner": "string",
+    "id": "int",
+    "title": "string",
+    "priority": "int",
+    "due": "date"
+  }
+}
