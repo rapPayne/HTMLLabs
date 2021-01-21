@@ -1,5 +1,5 @@
 {
-  "tasks": {
+  "Task": {
     "owner": "string",
     "id": "int",
     "title": "string",
