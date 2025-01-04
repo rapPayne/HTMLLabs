@@ -1,0 +1,51 @@
+article {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Each card on a small screen is landscape; image on top with the text below */
+.card {
+  /* Marks it as a containter */
+  container-type: inline-size;
+  container-name: card;
+  border: 2px solid #000;
+  padding: 1rem;
+  margin: 1rem;
+  display: flex;
+
+  & img {
+    width: 50%;
+    height: auto;
+  }
+
+  & .box {
+    background-color: lightblue;
+    padding: 1rem;
+    /* Font should be 4% of its container but no smaller than 
+    1rem and no larger than 20rem */
+    font-size: clamp(1rem, 3cqi, 20rem);
+  }
+}
+
+@media (width > 1000px) {
+  article {
+    flex-direction: row;
+
+    .card {
+      flex: 1;
+      flex-direction: column;
+
+      & img {
+        /* 100% of it's container */
+        width: 100cqi;
+      }
+    }
+  }
+}
+
+@container card (width > 30cqi) {
+  .card .box {
+    background-color: lightcoral;
+  }
+}
