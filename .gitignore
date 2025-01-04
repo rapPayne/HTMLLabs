@@ -11,6 +11,7 @@ npm-debug.log*
 pids
 *.pid
 *.seed
+.parcel-cache/
 
 # IDE things
 **/.vscode
