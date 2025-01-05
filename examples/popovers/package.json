@@ -1,0 +1,11 @@
+{
+  "name": "popovers",
+  "version": "1.0.0",
+  "description": "This project demonstrates the use of the HTML `<dialog>` element and the Popover API to create interactive and accessible popovers in a web application.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx browser-sync start --server --files '**/*'"
+  },
+  "author": "",
+  "license": "ISC"
+}
